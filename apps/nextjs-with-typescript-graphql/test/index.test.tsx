@@ -26,12 +26,14 @@ cache.writeQuery({
 })
 
 describe('Index', () => {
-  it('renders the html we want', async () => {
-    const component = renderer.create(
-      <MockedProvider cache={cache}>
-        <Index />
-      </MockedProvider>
-    )
-    expect(component.toJSON()).toMatchSnapshot()
+  it('renders the html we want',  () => {
+    () => {
+      const component = renderer.create(
+        <MockedProvider cache={cache}>
+          <Index />
+        </MockedProvider>
+      )
+      expect(component.toJSON()).toMatchSnapshot()
+    }
   })
 })
