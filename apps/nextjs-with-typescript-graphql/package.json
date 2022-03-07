@@ -5,6 +5,7 @@
     "dev": "yarn codegen && next",
     "build": "yarn codegen && next build",
     "test": "yarn codegen && jest",
+    "test:update-snapshots": "yarn codegen && jest -u",
     "start": "next start"
   },
   "dependencies": {
