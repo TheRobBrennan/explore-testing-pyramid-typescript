@@ -6,6 +6,12 @@
     "start": "npm run start:dev",
     "start:dev": "cd apps/nextjs-with-typescript-graphql/ && npm run dev",
     "test": "cd apps/nextjs-with-typescript-graphql/ && npm test",
+    "test:load": "npm run test:load:local:report",
+    "test:load:debug": "DEBUG=http,http:response npm run test:load:local",
+    "test:load:local": "npx artillery run --environment local ./tests/artillery.io/scenarios/load-page-default.yml",
+    "test:load:local:report": "npx artillery run --environment local ./tests/artillery.io/scenarios/load-page-default.yml --output ./tests/artillery.io/reports/test.json || npx artillery report --output ./tests/artillery.io/reports/report.html ./tests/artillery.io/reports/test.json && open ./tests/artillery.io/reports/report.html",
+    "test:load:preview": "npx artillery run --environment preview ./tests/artillery.io/scenarios/load-page-default.yml",
+    "test:load:preview:report": "npx artillery run --environment preview ./tests/artillery.io/scenarios/load-page-default.yml --output ./tests/artillery.io/reports/test.json || npx artillery report --output ./tests/artillery.io/reports/report.html ./tests/artillery.io/reports/test.json && open ./tests/artillery.io/reports/report.html",
     "test:update": "cd apps/nextjs-with-typescript-graphql/ && npm run test:update-snapshots"
   },
   "repository": {
@@ -17,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript/issues"
   },
-  "homepage": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript#readme"
+  "homepage": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript#readme",
+  "dependencies": {
+    "artillery": "^2.0.0-12"
+  },
+  "devDependencies": {
+    "artillery-plugin-ensure": "^1.1.1"
+  }
 }
