@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript/issues"
   },
-  "homepage": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript#readme"
+  "homepage": "https://github.com/TheRobBrennan/explore-testing-pyramid-typescript#readme",
+  "dependencies": {
+    "artillery": "^2.0.0-12"
+  }
 }
