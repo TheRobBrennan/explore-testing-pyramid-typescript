@@ -1,0 +1,61 @@
+# A "virtual user" is exactly what the name suggests - a simulation of a real user (or a client) using a service or an API.
+# Each virtual user is completely independent of other virtual users - just like in the real world. For example,
+# when testing an HTTP-based service, each virtual user will open & maintain its own TCP connection(s), and maintain its own cookies and any other data.
+
+# See "Writing Your First Test" at https://www.artillery.io/docs/guides/getting-started/writing-your-first-test
+config:
+  # Define plug-ins
+  plugins:
+    ensure: {} # Use plug-in https://github.com/artilleryio/artillery-plugin-ensure - NOTE: artillery-plugin-ensure => ensure
+
+  # Use the artillery-plugin-ensure to ensure:
+  #   - HTTP request response times are < 40ms
+  ensure:
+    thresholds:
+      - http.response_time.max: 40
+
+  # See "Test different deployment environments" at https://www.artillery.io/docs/guides/guides/command-line#test-different-deployment-environments
+  environments:
+    local:
+      target: "http://localhost:3000"
+      phases:
+        # Send ten virtual users every second for 10 seconds
+        - arrivalRate: 10
+          duration: 10
+          name: Rapid test - Send ten virtual users every second for 10 seconds
+
+    preview:
+      target: "http://localhost:3000"
+      phases:
+        # Send five virtual users every second for 60 seconds
+        - duration: 60
+          arrivalRate: 5
+          name: Warm up - Send five virtual users every second for 60 seconds
+
+        # Send five virtual users every second for the next two minutes; peaking at 50 virtual users at the end of the phase
+        # - duration: 120
+        #   arrivalRate: 5
+        #   rampTo: 50
+        #   name: Ramp up load - Send five virtual users every second for the next two minutes; peaking at 50 virtual users at the end of the phase
+
+        # Simulate a sustained spike of 50 virtual users every second for the next ten minutes
+        # - duration: 600
+        #   arrivalRate: 50
+        #   name: Sustained load - Simulate a sustained spike of 50 virtual users every second for the next ten minutes
+
+scenarios:
+  - name: "Load default page"
+    flow:
+      # - log: "New virtual user running"
+      - get:
+          url: "/"
+      # EXAMPLE: Simulate waiting on the home page, refreshing, navigating to about, and returning home
+      # - think: 5
+      # - get:
+      #     url: "/"
+      # - think: 5
+      # - get:
+      #     url: "/about"
+      # - think: 5
+      # - get:
+      #     url: "/"
